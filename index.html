@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ChannelRise Academia</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --red:#CC0000;--red-dark:#990000;--red-glow:rgba(204,0,0,0.12);
+    --black:#0a0a0a;--card:#141414;--card2:#1a1a1a;--border:rgba(255,255,255,0.08);
+    --text:#f0f0f0;--muted:#666;--muted2:#888;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{background:var(--black);color:var(--text);font-family:'DM Sans',system-ui,sans-serif;overflow-x:hidden}
+  body::before{content:'';position:fixed;inset:0;background-image:repeating-linear-gradient(0deg,transparent,transparent 60px,rgba(255,255,255,0.01) 60px,rgba(255,255,255,0.01) 61px),repeating-linear-gradient(90deg,transparent,transparent 60px,rgba(255,255,255,0.01) 60px,rgba(255,255,255,0.01) 61px);pointer-events:none;z-index:0}
+  .page{position:relative;z-index:1}
+
+  /* NAV */
+  nav{padding:24px 60px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--border);position:sticky;top:0;background:rgba(10,10,10,0.95);z-index:50;backdrop-filter:blur(8px)}
+  .logo{display:flex;align-items:center;gap:12px}
+  .logo-icon{width:36px;height:36px;background:var(--red);border-radius:8px;display:flex;align-items:center;justify-content:center}
+  .logo-icon svg{width:18px;height:18px;fill:white}
+  .logo-name{font-family:'Bebas Neue',sans-serif;font-size:24px;letter-spacing:1px;color:white}
+  .logo-name span{color:var(--red)}
+  .nav-links{display:flex;align-items:center;gap:32px}
+  .nav-links a{font-size:13px;color:var(--muted2);text-decoration:none;letter-spacing:0.5px;transition:color .2s}
+  .nav-links a:hover{color:white}
+  .nav-cta{background:var(--red);color:white;border:none;border-radius:8px;padding:10px 22px;font-family:'Bebas Neue',sans-serif;font-size:16px;letter-spacing:1px;cursor:pointer;text-decoration:none;transition:background .2s}
+  .nav-cta:hover{background:var(--red-dark)}
+
+  /* HERO */
+  .hero{padding:120px 60px 100px;max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center}
+  .hero-left{}
+  .hero-badge{display:inline-block;background:var(--red-glow);border:1px solid var(--red);color:var(--red);font-size:11px;letter-spacing:3px;text-transform:uppercase;padding:5px 14px;border-radius:20px;margin-bottom:24px}
+  .hero h1{font-family:'Bebas Neue',sans-serif;font-size:clamp(56px,7vw,96px);line-height:0.92;letter-spacing:2px;margin-bottom:24px}
+  .hero h1 span{color:var(--red)}
+  .hero-desc{font-size:16px;color:var(--muted2);line-height:1.8;margin-bottom:36px;max-width:440px}
+  .hero-btns{display:flex;gap:14px;flex-wrap:wrap}
+  .btn-primary{background:var(--red);color:white;border:none;border-radius:10px;padding:15px 32px;font-family:'Bebas Neue',sans-serif;font-size:20px;letter-spacing:2px;cursor:pointer;text-decoration:none;transition:all .2s;display:inline-block}
+  .btn-primary:hover{background:var(--red-dark);transform:translateY(-1px)}
+  .btn-secondary{background:transparent;color:var(--text);border:1px solid var(--border);border-radius:10px;padding:15px 32px;font-family:'Bebas Neue',sans-serif;font-size:20px;letter-spacing:2px;cursor:pointer;text-decoration:none;transition:all .2s;display:inline-block}
+  .btn-secondary:hover{border-color:rgba(255,255,255,0.3)}
+  .hero-right{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  .stat-card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:24px;text-align:center}
+  .stat-card.accent{border-color:rgba(204,0,0,0.3);background:var(--red-glow)}
+  .stat-num{font-family:'Bebas Neue',sans-serif;font-size:48px;color:var(--red);line-height:1;margin-bottom:6px}
+  .stat-label{font-size:12px;color:var(--muted);letter-spacing:1px;text-transform:uppercase}
+
+  /* SECTION BASE */
+  section{padding:100px 60px;max-width:1100px;margin:0 auto}
+  .section-badge{display:inline-block;background:var(--red-glow);border:1px solid var(--red);color:var(--red);font-size:10px;letter-spacing:3px;text-transform:uppercase;padding:4px 12px;border-radius:20px;margin-bottom:16px}
+  .section-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(36px,5vw,64px);line-height:1;letter-spacing:1px;margin-bottom:12px}
+  .section-title span{color:var(--red)}
+  .section-sub{font-size:15px;color:var(--muted2);line-height:1.8;max-width:520px;margin-bottom:56px}
+  .sep{width:100%;height:1px;background:var(--border);max-width:1100px;margin:0 auto}
+
+  /* EQUIPO */
+  .team-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+  .team-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:28px;text-align:center;transition:border-color .2s}
+  .team-card:hover{border-color:rgba(204,0,0,0.35)}
+  .avatar{width:72px;height:72px;border-radius:50%;background:var(--red);display:flex;align-items:center;justify-content:center;font-family:'Bebas Neue',sans-serif;font-size:22px;color:white;margin:0 auto 16px;letter-spacing:1px}
+  .team-name{font-family:'Bebas Neue',sans-serif;font-size:22px;letter-spacing:1px;margin-bottom:4px}
+  .team-role{font-size:12px;color:var(--red);letter-spacing:2px;text-transform:uppercase;margin-bottom:12px}
+  .team-desc{font-size:13px;color:var(--muted2);line-height:1.7}
+  .team-stats{display:flex;justify-content:center;gap:24px;margin-top:16px;padding-top:16px;border-top:1px solid var(--border)}
+  .ts-val{font-family:'Bebas Neue',sans-serif;font-size:20px;color:var(--text);display:block}
+  .ts-lbl{font-size:10px;color:var(--muted);letter-spacing:1px;text-transform:uppercase}
+
+  /* TEMARIO */
+  .temario-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+  .tema-card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:24px;transition:border-color .2s}
+  .tema-card:hover{border-color:rgba(204,0,0,0.3)}
+  .tema-icon{width:40px;height:40px;background:var(--red-glow);border:1px solid rgba(204,0,0,0.25);border-radius:10px;display:flex;align-items:center;justify-content:center;margin-bottom:14px}
+  .tema-icon svg{width:18px;height:18px;fill:var(--red)}
+  .tema-title{font-family:'Bebas Neue',sans-serif;font-size:18px;letter-spacing:1px;margin-bottom:8px}
+  .tema-items{list-style:none;padding:0}
+  .tema-items li{font-size:13px;color:var(--muted2);padding:4px 0;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:8px}
+  .tema-items li:last-child{border-bottom:none}
+  .tema-items li::before{content:'';width:4px;height:4px;background:var(--red);border-radius:50%;flex-shrink:0}
+
+  /* TESTIMONIOS */
+  .testi-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+  .testi-card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:24px;transition:border-color .2s}
+  .testi-card:hover{border-color:rgba(204,0,0,0.3)}
+  .stars{display:flex;gap:3px;margin-bottom:14px}
+  .star{width:12px;height:12px;background:var(--red);clip-path:polygon(50% 0%,61% 35%,98% 35%,68% 57%,79% 91%,50% 70%,21% 91%,32% 57%,2% 35%,39% 35%)}
+  .testi-text{font-size:14px;color:var(--muted2);line-height:1.7;margin-bottom:18px;font-style:italic}
+  .testi-author{display:flex;align-items:center;gap:10px}
+  .testi-avatar{width:36px;height:36px;border-radius:50%;background:var(--card2);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:500;color:var(--muted2)}
+  .testi-name{font-size:13px;font-weight:500}
+  .testi-handle{font-size:11px;color:var(--muted)}
+
+  /* PRECIOS */
+  .precios-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+  .precio-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:28px;position:relative;transition:border-color .2s}
+  .precio-card:hover{border-color:rgba(255,255,255,0.15)}
+  .precio-card.popular{border-color:var(--red);background:var(--red-glow)}
+  .popular-badge{position:absolute;top:-12px;left:50%;transform:translateX(-50%);background:var(--red);color:white;font-size:10px;letter-spacing:2px;text-transform:uppercase;padding:4px 14px;border-radius:20px;white-space:nowrap;font-family:'Bebas Neue',sans-serif}
+  .precio-plan{font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--muted);margin-bottom:12px}
+  .precio-num{font-family:'Bebas Neue',sans-serif;font-size:56px;line-height:1;color:var(--text);margin-bottom:4px}
+  .precio-num span{font-size:20px;color:var(--muted)}
+  .precio-periodo{font-size:12px;color:var(--muted);margin-bottom:24px}
+  .precio-sep{width:100%;height:1px;background:var(--border);margin-bottom:20px}
+  .precio-items{list-style:none;padding:0;margin-bottom:28px}
+  .precio-items li{font-size:13px;color:var(--muted2);padding:7px 0;display:flex;align-items:center;gap:10px;border-bottom:1px solid var(--border)}
+  .precio-items li:last-child{border-bottom:none}
+  .check{width:16px;height:16px;background:var(--red-glow);border:1px solid rgba(204,0,0,0.3);border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+  .check svg{width:8px;height:8px;fill:var(--red)}
+  .btn-plan{width:100%;padding:13px;border-radius:10px;font-family:'Bebas Neue',sans-serif;font-size:18px;letter-spacing:2px;cursor:pointer;transition:all .2s;text-align:center;display:block;text-decoration:none}
+  .btn-plan-outline{background:transparent;color:var(--text);border:1px solid var(--border)}
+  .btn-plan-outline:hover{border-color:rgba(255,255,255,0.3)}
+  .btn-plan-red{background:var(--red);color:white;border:none}
+  .btn-plan-red:hover{background:var(--red-dark)}
+
+  /* FOOTER CTA */
+  .footer-cta{background:var(--card);border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:80px 60px;text-align:center}
+  .footer-cta h2{font-family:'Bebas Neue',sans-serif;font-size:clamp(40px,6vw,80px);line-height:0.95;letter-spacing:2px;margin-bottom:20px}
+  .footer-cta h2 span{color:var(--red)}
+  .footer-cta p{font-size:15px;color:var(--muted2);max-width:480px;margin:0 auto 36px;line-height:1.8}
+  footer{padding:32px 60px;display:flex;align-items:center;justify-content:space-between;border-top:1px solid var(--border)}
+  .footer-copy{font-size:12px;color:var(--muted)}
+
+  @media(max-width:900px){
+    nav{padding:18px 24px}
+    .nav-links{display:none}
+    .hero{grid-template-columns:1fr;padding:60px 24px;gap:40px}
+    .hero-right{grid-template-columns:repeat(2,1fr)}
+    section{padding:60px 24px}
+    .team-grid,.temario-grid,.testi-grid,.precios-grid{grid-template-columns:1fr}
+    .footer-cta{padding:60px 24px}
+    footer{padding:24px}
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <nav>
+    <div class="logo">
+      <div class="logo-icon"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+      <div class="logo-name">Channel<span>Rise</span></div>
+    </div>
+    <div class="nav-links">
+      <a href="#equipo">El equipo</a>
+      <a href="#temario">Temario</a>
+      <a href="#testimonios">Alumnos</a>
+      <a href="#precios">Precios</a>
+    </div>
+
+  </nav>
+
+  <!-- HERO -->
+  <div style="max-width:1100px;margin:0 auto">
+    <div class="hero">
+      <div class="hero-left">
+        <div class="hero-badge">&#9679; Academia de YouTube</div>
+        <h1>CONVIERTE TU<br>CANAL EN UN<br><span>NEGOCIO</span></h1>
+        <p class="hero-desc">Aprende de los mentores que ya lo han hecho. Monetiza, crece y edita como un profesional. Sin excusas, sin rodeos.</p>
+        <div class="hero-btns">
+          <a href="#precios" class="btn-primary">Quiero entrar</a>
+          <a href="#temario" class="btn-secondary">Ver temario</a>
+        </div>
+      </div>
+      <div class="hero-right" style="grid-template-columns:1fr 1fr 1fr;grid-template-rows:1fr;">
+        <div class="stat-card">
+          <div class="stat-num">3</div>
+          <div class="stat-label">Mentores activos</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-num">98%</div>
+          <div class="stat-label">Tasa de satisfaccion</div>
+        </div>
+        <div class="stat-card accent">
+          <div class="stat-num">x4</div>
+          <div class="stat-label">Crecimiento medio</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sep"></div>
+
+  <!-- EQUIPO -->
+  <section id="equipo">
+    <div class="section-badge">&#9679; El equipo</div>
+    <div class="section-title">APRENDE DE<br>LOS <span>MEJORES</span></div>
+    <p class="section-sub">Nuestros mentores no son teoricos. Son creadores activos que viven de sus canales y comparten exactamente lo que funciona.</p>
+    <div class="team-grid">
+      <div class="team-card">
+        <div class="avatar">ZO</div>
+        <div class="team-name">Zoptimus</div>
+        <div class="team-role">Mentor de monetizacion</div>
+        <p class="team-desc">Especialista en estrategias de monetizacion avanzada. Ha generado ingresos de 6 cifras con su canal y ahora te ensenha el camino exacto.</p>
+      </div>
+      <div class="team-card">
+        <div class="avatar">VS</div>
+        <div class="team-name">vSergiors</div>
+        <div class="team-role">Mentor de crecimiento</div>
+        <p class="team-desc">Domina el algoritmo como nadie. Sus estrategias de crecimiento organico han llevado canales de 0 a 100K en menos de un anho.</p>
+      </div>
+      <div class="team-card">
+        <div class="avatar">KX</div>
+        <div class="team-name">KairoxX</div>
+        <div class="team-role">Mentor de edicion</div>
+        <p class="team-desc">Editor profesional con un ojo cinematografico unico. Sus tecnicas de retencion visual transforman videos ordinarios en contenido adictivo.</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="sep"></div>
+
+  <!-- TEMARIO -->
+  <section id="temario">
+    <div class="section-badge">&#9679; Lo que vas a aprender</div>
+    <div class="section-title">EL TEMARIO<br>QUE <span>CAMBIA</span> TODO</div>
+    <p class="section-sub">Un curriculum disenado desde la experiencia real. Cada modulo es accion pura, sin relleno.</p>
+    <div class="temario-grid">
+      <div class="tema-card">
+        <div class="tema-icon">
+          <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1.41 16.09V20h-2.67v-1.93c-1.71-.36-3.16-1.46-3.27-3.4h1.96c.1 1.05.82 1.87 2.65 1.87 1.96 0 2.4-.98 2.4-1.59 0-.83-.44-1.61-2.67-2.14-2.48-.6-4.18-1.62-4.18-3.67 0-1.72 1.39-2.84 3.11-3.21V4h2.67v1.95c1.86.45 2.79 1.86 2.85 3.39H14.3c-.05-1.11-.64-1.87-2.22-1.87-1.5 0-2.4.68-2.4 1.64 0 .84.65 1.39 2.67 1.91s4.18 1.39 4.18 3.91c-.01 1.83-1.38 2.83-3.12 3.16z"/></svg>
+        </div>
+        <div class="tema-title">Monetizacion</div>
+        <ul class="tema-items">
+          <li>Requisitos y verificacion de canal</li>
+          <li>AdSense y CPM avanzado</li>
+          <li>Patrocinios y brand deals</li>
+          <li>Memberships y Super Thanks</li>
+          <li>Productos digitales propios</li>
+          <li>Diversificacion de ingresos</li>
+        </ul>
+      </div>
+      <div class="tema-card">
+        <div class="tema-icon">
+          <svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>
+        </div>
+        <div class="tema-title">Edicion</div>
+        <ul class="tema-items">
+          <li>Flujo de trabajo profesional</li>
+          <li>Retencion visual y ritmo</li>
+          <li>Color grading cinematografico</li>
+          <li>Motion graphics y efectos</li>
+          <li>Optimizacion para mobile</li>
+          <li>Thumbnails que convierten</li>
+        </ul>
+      </div>
+      <div class="tema-card">
+        <div class="tema-icon">
+          <svg viewBox="0 0 24 24"><path d="M16 6l2.29 2.29-4.88 4.88-4-4L2 16.59 3.41 18l6-6 4 4 6.3-6.29L22 12V6z"/></svg>
+        </div>
+        <div class="tema-title">Crecimiento</div>
+        <ul class="tema-items">
+          <li>SEO de YouTube avanzado</li>
+          <li>Algoritmo y recomendaciones</li>
+          <li>Estrategia de titulos y tags</li>
+          <li>Analisis de competencia</li>
+          <li>Comunidad y fidelizacion</li>
+          <li>Viralizacion organica</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <div class="sep"></div>
+
+  <!-- ============================================================
+       TESTIMONIOS — PROXIMAMENTE
+       Cuando tengas resenas reales, sustituye este bloque por la
+       seccion completa con testi-grid y testi-card.
+       ============================================================ -->
+
+  <div class="sep"></div>
+
+  <!-- PRECIOS -->
+  <section id="precios">
+    <div class="section-badge">&#9679; Planes</div>
+    <div class="section-title">ELIGE TU<br><span>MODULO</span></div>
+    <p class="section-sub">Primer mes gratis en todos los planes. Sin permanencias. Paga cuando veas resultados.</p>
+
+    <div style="background:var(--red-glow);border:1px solid rgba(204,0,0,0.25);border-radius:12px;padding:14px 20px;display:flex;align-items:center;gap:12px;margin-bottom:40px;flex-wrap:wrap">
+      <div style="width:8px;height:8px;background:var(--red);border-radius:50%;flex-shrink:0"></div>
+      <span style="font-size:13px;color:var(--text)"><strong style="color:var(--red)">Primer mes completamente gratis</strong> en cualquier plan. Despues paga mensualmente por PayPal.</span>
+    </div>
+
+    <div class="precios-grid" style="grid-template-columns:repeat(4,1fr)">
+
+      <!-- EDICION BASICA -->
+      <div class="precio-card">
+        <div class="precio-plan">Edicion</div>
+        <div style="font-size:11px;color:var(--red);letter-spacing:2px;text-transform:uppercase;margin-bottom:10px">Basica · KairoxX</div>
+        <div class="precio-num">4<span>€</span></div>
+        <div class="precio-periodo">al mes · 1er mes gratis</div>
+        <div class="precio-sep"></div>
+        <ul class="precio-items">
+          <li><div class="check"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div>Flujo de trabajo basico</li>
+          <li><div class="check"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div>Cortes y ritmo</li>
+          <li><div class="check"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div>Comunidad Discord</li>
+          <li style="opacity:.35"><div class="check" style="opacity:.3"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div>Motion graphics</li>
+          <li style="opacity:.35"><div class="check" style="opacity:.3"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div>Color grading</li>
+        </ul>
+        <button class="btn-plan btn-plan-outline" onclick="mostrarPaypal('Edicion Basica','4')">Empezar gratis</button>
+      </div>
+
+      <!-- EDICION AVANZADA -->
+      <div class="precio-card popular">
+        <div class="popular-badge">Mas popular</div>
+        <div class="precio-plan">Edicion</div>
+        <div style="font-size:11px;color:var(--red);letter-spacing:2px;text-transform:uppercase;margin-bottom:10px">Avanzada · KairoxX</div>
+        <div class="precio-num">10<span>€</span></div>
+        <div class="precio-periodo">al mes · 1er mes gratis</div>
+        <div class="precio-sep"></div>
+        <ul class="precio-items">
+          <li><div class="check"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div>Todo lo de Basica</li>
+          <li><div class="check"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div>Motion graphics</li>
+          <li><div class="check"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div>Color grading</li>
+          <li><div class="check"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div>Thumbnails pro</li>
+          <li><div class="check"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div>Revision de videos</li>
+        </ul>
+        <button class="btn-plan btn-plan-red" onclick="mostrarPaypal('Edicion Avanzada','10')">Empezar gratis</button>
+      </div>
+
+      <!-- MONETIZACION -->
+      <div class="precio-card">
+        <div class="precio-plan">Monetizacion</div>
+        <div style="font-size:11px;color:var(--red);letter-spacing:2px;text-transform:uppercase;margin-bottom:10px">con Zoptimus</div>
+        <div class="precio-num">3<span>€</span></div>
+        <div class="precio-periodo">al mes · 1er mes gratis</div>
+        <div class="precio-sep"></div>
+        <ul class="precio-items">
+          <li><div class="check"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div>AdSense y CPM</li>
+          <li><div class="check"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div>Patrocinios y brand deals</li>
+          <li><div class="check"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div>Memberships</li>
+          <li><div class="check"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div>Comunidad Discord</li>
+          <li><div class="check"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div>Sesiones grupales</li>
+        </ul>
+        <button class="btn-plan btn-plan-outline" onclick="mostrarPaypal('Monetizacion','3')">Empezar gratis</button>
+      </div>
+
+      <!-- CRECIMIENTO -->
+      <div class="precio-card">
+        <div class="precio-plan">Crecimiento</div>
+        <div style="font-size:11px;color:var(--red);letter-spacing:2px;text-transform:uppercase;margin-bottom:10px">con vSergiors</div>
+        <div class="precio-num">2<span>€</span></div>
+        <div class="precio-periodo">al mes · 1er mes gratis</div>
+        <div class="precio-sep"></div>
+        <ul class="precio-items">
+          <li><div class="check"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div>SEO de YouTube</li>
+          <li><div class="check"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div>Algoritmo y recomendaciones</li>
+          <li><div class="check"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div>Titulos y tags</li>
+          <li><div class="check"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div>Comunidad Discord</li>
+          <li><div class="check"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div>Sesiones grupales</li>
+        </ul>
+        <button class="btn-plan btn-plan-outline" onclick="mostrarPaypal('Crecimiento','2')">Empezar gratis</button>
+      </div>
+
+    </div>
+
+    <!-- INFO PAYPAL + SOPORTE -->
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:32px">
+      <div style="background:var(--card);border:1px solid var(--border);border-radius:12px;padding:20px;display:flex;align-items:center;gap:14px">
+        <div style="width:40px;height:40px;background:#003087;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="white"><path d="M7.076 21.337H2.47a.641.641 0 0 1-.633-.74L4.944.901C5.026.382 5.474 0 5.998 0h7.46c2.57 0 4.578.543 5.69 1.81 1.01 1.15 1.304 2.42 1.012 4.287-.023.143-.047.288-.077.437-.983 5.05-4.349 6.797-8.647 6.797h-2.19c-.524 0-.968.382-1.05.9l-1.12 7.106zm14.146-14.42a3.35 3.35 0 0 0-.607-.541c-.013.076-.026.175-.041.254-.59 3.025-2.566 6.243-8.558 6.243H9.928l-1.35 8.56h3.53c.458 0 .85-.333.922-.785l.038-.196.733-4.649.047-.256a.932.932 0 0 1 .921-.785h.58c3.757 0 6.698-1.527 7.556-5.944.358-1.845.173-3.386-.683-4.47z"/></svg>
+        </div>
+        <div>
+          <div style="font-size:13px;font-weight:500;margin-bottom:3px">Pago por PayPal</div>
+          <div style="font-size:12px;color:var(--muted)">Mensual · Cancela cuando quieras</div>
+        </div>
+      </div>
+      <div style="background:var(--card);border:1px solid var(--border);border-radius:12px;padding:20px;display:flex;align-items:center;gap:14px">
+        <div style="width:40px;height:40px;background:var(--red-glow);border:1px solid rgba(204,0,0,0.25);border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="#CC0000"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+        </div>
+        <div>
+          <div style="font-size:13px;font-weight:500;margin-bottom:3px">Soporte</div>
+          <div style="font-size:12px;color:var(--muted)">soporte.channelrise@hotmail.com</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MODAL PAYPAL -->
+  <div id="paypalModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.88);z-index:200;align-items:center;justify-content:center">
+    <div style="background:var(--card);border:1px solid var(--red);border-radius:20px;padding:40px;text-align:center;max-width:400px;width:90%">
+      <div style="width:56px;height:56px;background:#003087;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 20px">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="white"><path d="M7.076 21.337H2.47a.641.641 0 0 1-.633-.74L4.944.901C5.026.382 5.474 0 5.998 0h7.46c2.57 0 4.578.543 5.69 1.81 1.01 1.15 1.304 2.42 1.012 4.287-.023.143-.047.288-.077.437-.983 5.05-4.349 6.797-8.647 6.797h-2.19c-.524 0-.968.382-1.05.9l-1.12 7.106zm14.146-14.42a3.35 3.35 0 0 0-.607-.541c-.013.076-.026.175-.041.254-.59 3.025-2.566 6.243-8.558 6.243H9.928l-1.35 8.56h3.53c.458 0 .85-.333.922-.785l.038-.196.733-4.649.047-.256a.932.932 0 0 1 .921-.785h.58c3.757 0 6.698-1.527 7.556-5.944.358-1.845.173-3.386-.683-4.47z"/></svg>
+      </div>
+      <h2 style="font-family:'Bebas Neue',sans-serif;font-size:28px;letter-spacing:1px;margin-bottom:8px">PAGO POR PAYPAL</h2>
+      <p style="font-size:14px;color:var(--muted2);line-height:1.7;margin-bottom:6px">Plan seleccionado: <strong id="modalPlan" style="color:var(--red)"></strong></p>
+      <p style="font-size:13px;color:var(--muted);margin-bottom:24px">Primer mes gratis. Desde el 2o mes: <strong id="modalPrecio" style="color:var(--text)"></strong>€/mes</p>
+      <div style="background:rgba(255,255,255,0.04);border:1px solid var(--border);border-radius:10px;padding:16px;margin-bottom:20px">
+        <div style="font-size:11px;color:var(--muted);letter-spacing:2px;text-transform:uppercase;margin-bottom:8px">Email de PayPal</div>
+        <div style="font-size:17px;font-weight:500;color:var(--text);margin-bottom:12px">soporte.channelrise@hotmail.com</div>
+        <button onclick="copiarEmail()" id="btnCopiar" style="background:var(--red);color:white;border:none;border-radius:8px;padding:9px 20px;font-family:'Bebas Neue',sans-serif;font-size:15px;letter-spacing:1px;cursor:pointer;transition:background .2s">Copiar email</button>
+      </div>
+      <p style="font-size:12px;color:var(--muted);line-height:1.7;margin-bottom:20px">Busca este email en PayPal y envia el pago indicando el plan en el concepto. Te damos acceso en menos de 24h.</p>
+      <button onclick="cerrarModal()" style="background:transparent;color:var(--muted);border:1px solid var(--border);border-radius:8px;padding:9px 24px;font-family:'Bebas Neue',sans-serif;font-size:15px;letter-spacing:1px;cursor:pointer">Cerrar</button>
+    </div>
+  </div>
+
+  <!-- CTA FINAL -->
+  <div class="footer-cta">
+    <h2>TU CANAL NO<br>PUEDE <span>ESPERAR</span></h2>
+    <p>Cada dia sin actuar es un dia que tu competencia te gana terreno. Elige tu plan y empieza a cambiar las cosas.</p>
+    <a href="#precios" class="btn-primary">Ver planes</a>
+  </div>
+
+  <footer>
+    <div class="logo">
+      <div class="logo-icon"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+      <div class="logo-name">Channel<span>Rise</span></div>
+    </div>
+    <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px">
+      <div class="footer-copy">2026 ChannelRise Academia · Todos los derechos reservados</div>
+      <a href="mailto:soporte.channelrise@hotmail.com" style="font-size:12px;color:var(--muted);text-decoration:none">soporte.channelrise@hotmail.com</a>
+    </div>
+  </footer>
+
+<script>
+  function mostrarPaypal(plan, precio) {
+    document.getElementById('modalPlan').textContent = plan;
+    document.getElementById('modalPrecio').textContent = precio;
+    document.getElementById('btnCopiar').textContent = 'Copiar email';
+    document.getElementById('paypalModal').style.display = 'flex';
+  }
+  function cerrarModal() {
+    document.getElementById('paypalModal').style.display = 'none';
+  }
+  function copiarEmail() {
+    navigator.clipboard.writeText('soporte.channelrise@hotmail.com').then(function() {
+      var btn = document.getElementById('btnCopiar');
+      btn.textContent = 'Copiado!';
+      setTimeout(function(){ btn.textContent = 'Copiar email'; }, 2000);
+    });
+  }
+  document.getElementById('paypalModal').addEventListener('click', function(e){
+    if(e.target === this) cerrarModal();
+  });
+</script>
+
+</div>
+</body>
+</html>
